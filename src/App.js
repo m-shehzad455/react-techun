@@ -1,55 +1,43 @@
-import ExpenseItem from "./components/ExpenseItem.js";
+import React,{useState} from "react";
 
-function App() {
-  let expenses = [
-    {
-      id: "e1",
-      title: "School Fee",
-      amount: "300",
-      date: new Date(2022, 7, 20),
-    },
-    {
-      id: "e2",
-      title: "Books",
-      amount: "250",
-      date: new Date(2022, 6, 10),
-    },
-    {
-      id: "e3",
-      title: "House Rent",
-      amount: "500",
-      date: new Date(2022, 5, 15),
-    },
-    {
-      id: "e4",
-      title: "Food",
-      amount: "350",
-      date: new Date(2022, 4, 5),
-    },
-  ];
+import NewExpense from "./components/NewExpense/NewExpense";
+
+import Expenses from "./components/Expenses/Expenses";
+
+
+let DUMY_EXPENSES = []; 
+
+const  App = () => {
+
+   const [expenses,setExpenses] = useState(DUMY_EXPENSES);
+
+   let data = fetch("http://localhost:3000/user")
+   console.log(data,"hiii")
+   console.log("asdfasdfasd")
+
+  const  addExpenseHandler = (expense) => {
+    const updateExpense = [expense, ...expenses];
+     
+
+    // fetch('http://localhost:3000/user').then(
+    //   response => {
+    //     return response.json();
+    //   }
+    // ).then(
+    //    data => {
+    //     setExpenses(data);
+    //    },
+    //    console.log(data)
+    // );
+
+    setExpenses(updateExpense);
+  
+ }
+
   return (
     <div>
-      <h2>Lets Get's Started</h2>
-      <ExpenseItem
-        date={expenses[0].date}
-        title={expenses[0].title}
-        amount={expenses[0].amount}
-      ></ExpenseItem>
-      <ExpenseItem
-         date={expenses[1].date}
-         title={expenses[1].title}
-         amount={expenses[1].amount}
-      ></ExpenseItem>
-      <ExpenseItem
-         date={expenses[2].date}
-         title={expenses[2].title}
-         amount={expenses[2].amount}
-      ></ExpenseItem>
-      <ExpenseItem
-         date={expenses[3].date}
-         title={expenses[3].title}
-         amount={expenses[3].amount}
-      ></ExpenseItem>
+      <NewExpense  onAddExpense={addExpenseHandler} />
+      <Expenses item={expenses}/>
     </div>
   );
 }
